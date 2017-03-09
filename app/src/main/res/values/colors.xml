@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--theme default-->
+    <color name="colorPrimary">#4e5259</color>
+    <color name="colorPrimaryDark">#4e5259</color>
+   <!-- theme night-->
+    <color name="colorPrimaryThemeNight">#3b5998</color>
+    <!-- theme morning-->
+    <color name="colorPrimaryThemeMorning">#fbba47</color>
+
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorLightWhite">#F8F8F8</color>
+    <color name="colorDarkText">#404040</color>
+    <color name="colorDarkHead">#333333</color>
+    <color name="colorHomeIcons">#FFF8F8F8</color>
+
+</resources>
