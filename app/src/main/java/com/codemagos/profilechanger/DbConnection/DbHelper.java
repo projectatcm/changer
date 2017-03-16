@@ -18,9 +18,8 @@ public class DbHelper extends SQLiteOpenHelper {
     static SQLiteDatabase DB;
     Context context;
     String LOG = "Changer DB -> ";
-    String CREATE_PROFILE_TABLE = "CREATE TABLE IF NOT EXISTS profile(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "action_id INTEGER" +
-            "name TEXT,  " +
+    String CREATE_PROFILE_TABLE = "CREATE TABLE IF NOT EXISTS profile(id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "name TEXT," +
             "airplane TEXT," +
             "bluetooth TEXT," +
             "brightness TEXT," +
@@ -30,14 +29,14 @@ public class DbHelper extends SQLiteOpenHelper {
             "wifi TEXT" +
             ");";
 
-    String CREATE_WIFI_ACTION = "CREATE TABLE IF NOT EXIST wifi_action(id PRIMARY KEY AUTOINCREMENT)," +
+    String CREATE_WIFI_ACTION = "CREATE TABLE IF NOT EXISTS wifi_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "ssid TEXT," +
             "profile_on_connect INTEGER" +
             "profile_on_disconnect INTEGER" +
             ");";
-    String CREATE_ALARM_ACTION = "CREATE TABLE IF NOT EXIST alarm_action(id PRIMARY KEY AUTOINCREMENT)," +
+    String CREATE_ALARM_ACTION = "CREATE TABLE IF NOT EXISTS alarm_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "time DATETIME," +
-            "profile_on_trigger INTEGER," +
+            "profile_on_trigger INTEGER" +
             ");";
 
 
@@ -50,7 +49,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // creating tables
         db.execSQL(CREATE_PROFILE_TABLE);
-        db.execSQL(CREATE_ALARM_ACTION);
+      db.execSQL(CREATE_ALARM_ACTION);
         db.execSQL(CREATE_WIFI_ACTION);
         Log.i(LOG,"Tables created !");
     }
@@ -63,10 +62,10 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put("ssid", ssid);
         contentValues.put("profile_on_connect", profile_on_connect);
         contentValues.put("profile_on_disconnect", profile_on_disconnect);
-        db.insert("profile", null, contentValues);
+        db.insert("wifi_action", null, contentValues);
         Log.i(LOG,"Wifi Action Added");
     }
-    public void addProfile(SQLiteDatabase db,String name,String action,String airplane,String bluetooth,
+    public Long addProfile(SQLiteDatabase db,String name,String airplane,String bluetooth,
                            String brightness,String gps,String mobile_data,
                            String ring,String wifi){
         ContentValues contentValues = new ContentValues();
@@ -79,8 +78,9 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put("ring", ring);
         contentValues.put("wifi", wifi);
         // inserting into table
-        db.insert("profile", null, contentValues);
-        Log.i(LOG,"Progile Added");
+       Long last_insert_id =  db.insert("profile", null, contentValues);
+        Log.i(LOG,"Profile Added");
+        return last_insert_id;
     }
 
     public Cursor getProfiles(SQLiteDatabase db){

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--theme default-->
-    <color name="colorPrimary">#4e5259</color>
-    <color name="colorPrimaryDark">#4e5259</color>
+    <color name="colorPrimary">#3e84d3</color>
+    <color name="colorPrimaryDark">#3e84d3</color>
    <!-- theme night-->
     <color name="colorPrimaryThemeNight">#3b5998</color>
     <!-- theme morning-->
