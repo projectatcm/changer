@@ -5,4 +5,7 @@ package com.codemagos.profilechanger;
  */
 
 public class ProfileChanger {
+    public void hello(){
+
+    }
 }
