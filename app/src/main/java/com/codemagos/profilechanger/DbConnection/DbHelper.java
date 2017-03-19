@@ -28,6 +28,11 @@ public class DbHelper extends SQLiteOpenHelper {
             "ring TEXT," +
             "wifi TEXT" +
             ");";
+    String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS contacts(id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "name TEXT," +
+            "number TEXT," +
+            "ring TEXT" +
+            ");";
 
     String CREATE_WIFI_ACTION = "CREATE TABLE IF NOT EXISTS wifi_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "ssid TEXT," +
@@ -52,6 +57,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PROFILE_TABLE);
       db.execSQL(CREATE_ALARM_ACTION);
         db.execSQL(CREATE_WIFI_ACTION);
+        db.execSQL(CREATE_CONTACTS_TABLE);
         Log.i(LOG,"Tables created !");
     }
 
@@ -84,7 +90,27 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.i(LOG,"Profile Added");
         return last_insert_id;
     }
-
+    public Long addContact(SQLiteDatabase db,String name,String number,String ring){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("number", number);
+        contentValues.put("ring", ring);
+        Long last_insert_id =  db.insert("contacts", null, contentValues);
+        Log.i(LOG,"contact Added");
+        return last_insert_id;
+    }
+    public Cursor getContacts(SQLiteDatabase db){
+        String query = "Select * from contacts";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
+    public Cursor getContact(SQLiteDatabase db,String contactID){
+        String query = "Select * from contacts where id = '"+contactID+"'";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
     public Cursor getProfiles(SQLiteDatabase db){
         String query = "Select * from profile";
         String[] params = null;

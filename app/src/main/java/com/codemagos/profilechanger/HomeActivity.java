@@ -39,11 +39,10 @@ public class HomeActivity extends AppCompatActivity {
         btn_info_location = (Button) findViewById(R.id.btn_info_location);
         // core logic class to set and get profiles
         profileChanger = new ProfileChanger(getApplicationContext());
-profileChanger.setScreenBrightness(255);
+        profileChanger.setScreenBrightness(255);
         // updating home widgets
         updateWidgets();
     }
-
 
     public void profiles(View v) {
         Toast.makeText(getApplicationContext(), "Profiles View", Toast.LENGTH_LONG).show();
@@ -57,6 +56,9 @@ profileChanger.setScreenBrightness(255);
                 break;
             case R.id.btn_actions:
                 startActivity(new Intent(getApplicationContext(), ActionsActivity.class));
+                break;
+            case R.id.btn_contacts:
+                startActivity(new Intent(getApplicationContext(), ContactsListActivity.class));
                 break;
         }
 
@@ -79,8 +81,8 @@ profileChanger.setScreenBrightness(255);
         btn_info_bluetooth.setText(bluetooth);
         btn_info_wifi.setText(wifi);
         btn_info_airplane.setText(airplane);
-        btn_info_brightness.setText(brightness);
-        Log.d("brightness",String.valueOf(brightness_percentntage));
+    //    btn_info_brightness.setText(brightness);
+        Log.d("brightness", String.valueOf(brightness_percentntage));
     }
 
 

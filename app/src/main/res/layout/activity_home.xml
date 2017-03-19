@@ -235,7 +235,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_settings"
+            android:id="@+id/btn_contacts"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -248,12 +248,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_contacts" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="Contacts"
                 android:textColor="@color/colorDarkHead" />
         </LinearLayout>
     </LinearLayout>
