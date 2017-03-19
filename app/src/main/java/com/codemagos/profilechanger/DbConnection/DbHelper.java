@@ -31,8 +31,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     String CREATE_WIFI_ACTION = "CREATE TABLE IF NOT EXISTS wifi_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "ssid TEXT," +
-            "profile_on_connect INTEGER" +
-            "profile_on_disconnect INTEGER" +
+            "profile_on_connect INTEGER," +
+            "profile_on_disconnect INTEGER," +
+            "status INTEGER" +
             ");";
     String CREATE_ALARM_ACTION = "CREATE TABLE IF NOT EXISTS alarm_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "time DATETIME," +
@@ -62,6 +63,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put("ssid", ssid);
         contentValues.put("profile_on_connect", profile_on_connect);
         contentValues.put("profile_on_disconnect", profile_on_disconnect);
+        contentValues.put("status", 1);
         db.insert("wifi_action", null, contentValues);
         Log.i(LOG,"Wifi Action Added");
     }
@@ -85,6 +87,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public Cursor getProfiles(SQLiteDatabase db){
         String query = "Select * from profile";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
+    public Cursor getProfile(SQLiteDatabase db,String id){
+        String query = "Select * from profile where id = '"+id+"'";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
+
+    public Cursor getWifiAction(SQLiteDatabase db,String ssid){
+        String query = "Select * from wifi_action where ssid = '"+ssid+"'";
         String[] params = null;
         Cursor rs = db.rawQuery(query,params);
         return rs;

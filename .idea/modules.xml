@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ProfieChanger.iml" filepath="$PROJECT_DIR$/ProfieChanger.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProfileChanger.iml" filepath="$PROJECT_DIR$/ProfileChanger.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

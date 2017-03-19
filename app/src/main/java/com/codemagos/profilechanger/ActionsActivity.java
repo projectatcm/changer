@@ -36,6 +36,12 @@ FloatingActionButton float_btn_add_new;
                         startActivity(new Intent(getApplicationContext(),ActionWifiSetActivity.class));
                     }
                 });
+                btn_alarm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(),ActionAlarmSetActivity.class));
+                    }
+                });
                 dialog.setTitle("Choose Action Type");
                 dialog.show();
             }
