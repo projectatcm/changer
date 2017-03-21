@@ -14,14 +14,14 @@ public class SharedPreferenceStore {
 	public SharedPreferenceStore(Context context){
 		settings = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 	}
-	public void setMode(int mode){
+	public void setPrevRingMode(int mode){
 		edit = settings.edit();
 		edit.putInt("MODE", mode);
 		edit.commit();
 	}
 
-	public int getMode(){
-		return settings.getInt("MODE", Modes.OFF);
+	public int getPrevRingMode(){
+		return settings.getInt("MODE", 0);
 	}
 
 

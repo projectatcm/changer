@@ -105,6 +105,12 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor rs = db.rawQuery(query,params);
         return rs;
     }
+    public Cursor searchInContact(SQLiteDatabase db,String number){
+        String query = "Select * from contacts where number = '"+number+"'";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
     public Cursor getContact(SQLiteDatabase db,String contactID){
         String query = "Select * from contacts where id = '"+contactID+"'";
         String[] params = null;

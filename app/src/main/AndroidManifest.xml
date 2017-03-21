@@ -16,6 +16,12 @@
     <uses-permission android:name="com.android.alarm.premission.SET_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
         android:allowBackup="true"
@@ -43,7 +49,12 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".Receivers.AlarmReceiver"></receiver>
+        <receiver android:name=".Receivers.SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Receivers.AlarmReceiver" />
 
         <activity
             android:name=".HomeActivity"
@@ -65,7 +76,8 @@
         <activity android:name=".ActionWifiSetActivity" />
         <activity android:name=".ActionsActivity" />
         <activity android:name=".ActionAlarmSetActivity" />
-        <activity android:name=".ContactsListActivity"></activity>
+        <activity android:name=".ContactsListActivity" />
+        <activity android:name=".ProfilesActivity"></activity>
     </application>
 
 </manifest>

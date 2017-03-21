@@ -3,6 +3,7 @@ package com.codemagos.profilechanger;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.LocationListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codemagos.profilechanger.DbConnection.DbHelper;
+import com.codemagos.profilechanger.Receivers.LocationReceiveService;
 import com.codemagos.profilechanger.Spstore.SharedPreferenceStore;
 import com.codemagos.profilechanger.Utils.Utils;
 
@@ -39,9 +41,10 @@ public class HomeActivity extends AppCompatActivity {
         btn_info_location = (Button) findViewById(R.id.btn_info_location);
         // core logic class to set and get profiles
         profileChanger = new ProfileChanger(getApplicationContext());
-        profileChanger.setScreenBrightness(255);
+
         // updating home widgets
         updateWidgets();
+        startService(new Intent(getApplicationContext(), LocationReceiveService.class));
     }
 
     public void profiles(View v) {
@@ -59,6 +62,9 @@ public class HomeActivity extends AppCompatActivity {
                 break;
             case R.id.btn_contacts:
                 startActivity(new Intent(getApplicationContext(), ContactsListActivity.class));
+                break;
+            case R.id.btn_profiles:
+                startActivity(new Intent(getApplicationContext(), ProfilesActivity.class));
                 break;
         }
 

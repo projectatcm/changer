@@ -1,14 +1,24 @@
 package com.codemagos.profilechanger;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.hardware.Camera;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Window;
 import android.widget.Toast;
@@ -26,6 +36,9 @@ public class ProfileChanger {
     SQLiteDatabase sqLiteDatabase;
     BluetoothAdapter mBluetoothAdapter;
     WifiManager wifiManager;
+    MediaPlayer mediaPlayer;
+    static Camera camera = null;
+    Camera.Parameters camera_parameters;
 
     public ProfileChanger(Context context) {
         this.context = context;
@@ -34,7 +47,9 @@ public class ProfileChanger {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        mediaPlayer = MediaPlayer.create(context, R.raw.sound);
     }
+
 
     public void set(String profileID) {
         Cursor cursor = dbHelper.getProfile(sqLiteDatabase, profileID);
@@ -57,7 +72,7 @@ public class ProfileChanger {
             Log.d("PROFILE mobile_data", mobile_data);
             Log.d("PROFILE ring", ring);
             Log.d("PROFILE wifi", wifi);
-            setScreenBrightness(Integer.parseInt("10"));
+            setScreenBrightness(Integer.parseInt(brightness));
             setRingMode(ring);
         }
     }
@@ -74,6 +89,10 @@ public class ProfileChanger {
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                 break;
         }
+    }
+
+    public void setRingMode(int mode) {
+        audioManager.setRingerMode(mode);
     }
 
     public void setWifi(String state) {
@@ -178,14 +197,101 @@ public class ProfileChanger {
     }
 
     public boolean getWifiState() {
-        boolean wifiEnabled = wifiManager.isWifiEnabled();
-        return wifiEnabled ? true : false;
+        if (wifiManager != null) {
+            boolean wifiEnabled = wifiManager.isWifiEnabled();
+            return wifiEnabled ? true : false;
+        }
+        return false;
     }
 
     public boolean getBlueToothState() {
-        boolean bluetoothState = mBluetoothAdapter.isEnabled();
-        return bluetoothState ? true : false;
+        if (mBluetoothAdapter != null) {
+            boolean bluetoothState = mBluetoothAdapter.isEnabled();
+            return bluetoothState ? true : false;
+        }
+        return false;
     }
 
 
+    public void turnTourchOn() {
+        PackageManager pm = context.getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+            camera = Camera.open();
+            camera_parameters = camera.getParameters();
+            camera_parameters.setFlashMode(camera_parameters.FLASH_MODE_TORCH);
+            camera.setParameters(camera_parameters);
+            camera.startPreview();
+        }
+    }
+
+    public void turnTourchOff() {
+        camera.stopPreview();
+        camera.release();
+        camera = null;
+    }
+
+    public void playSound() {
+        mediaPlayer.start();
+    }
+
+    public void stopSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+
+    public void turnGPSOn() {
+        String provider = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+        if (!provider.contains("gps")) { //if gps is disabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            context.sendBroadcast(poke);
+        }
+    }
+
+    public void turnGPSOff() {
+        String provider = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+        if (provider.contains("gps")) { //if gps is enabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            context.sendBroadcast(poke);
+
+        }
+    }
+
+    public void getMyLocation() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        sendLocationSMS("9072388801",location);
+
+
+    }
+    public void sendLocationSMS(String phoneNumber, Location currentLocation) {
+        SmsManager smsManager = SmsManager.getDefault();
+        StringBuffer smsBody = new StringBuffer();
+        smsBody.append("http://maps.google.com?q=");
+        smsBody.append(currentLocation.getLatitude());
+        smsBody.append(",");
+        smsBody.append(currentLocation.getLongitude());
+        smsManager.sendTextMessage(phoneNumber, null, smsBody.toString(), null, null);
+    }
 }
