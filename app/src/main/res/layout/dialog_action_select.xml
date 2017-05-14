@@ -13,7 +13,7 @@
        android:id="@+id/btn_wifi"
        android:onClick="dialogOptionSelect"
        />
-    <Button
+<!--    <Button
         android:onClick="dialogOptionSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:textColor="@color/colorLightWhite"
         android:text="Call"
         android:id="@+id/btn_call"
-        />
+        />-->
     <Button
         android:onClick="dialogOptionSelect"
         android:layout_width="match_parent"

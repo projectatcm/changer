@@ -163,7 +163,7 @@ btn_save.setOnClickListener(new View.OnClickListener() {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,alerttime,PendingIntent.getBroadcast(this,1,alertIntent,PendingIntent.FLAG_UPDATE_CURRENT));
 
-
+finish();
 
     }
 

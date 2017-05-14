@@ -3,6 +3,8 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="5"
+    android:baselineAligned="false"
+    android:descendantFocusability="blocksDescendants"
     >
     <LinearLayout
         android:layout_width="0dp"
@@ -28,7 +30,7 @@
             android:id="@+id/btn_delete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="RING"
+            android:text=""
             android:textColor="@color/colorAccent"
             android:background="@android:color/transparent"
             />

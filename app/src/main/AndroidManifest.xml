@@ -16,9 +16,10 @@
     <uses-permission android:name="com.android.alarm.premission.SET_ALARM" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
@@ -74,10 +75,15 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity android:name=".ActionWifiSetActivity" />
+        <activity
+            android:name=".DialogActivity"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
         <activity android:name=".ActionsActivity" />
         <activity android:name=".ActionAlarmSetActivity" />
         <activity android:name=".ContactsListActivity" />
-        <activity android:name=".ProfilesActivity"></activity>
+        <activity android:name=".ProfilesActivity" />
+        <activity android:name=".LocationSetActivity"></activity>
+        <service android:enabled="true" android:name=".Receivers.LocationReceiveService" />
     </application>
 
 </manifest>

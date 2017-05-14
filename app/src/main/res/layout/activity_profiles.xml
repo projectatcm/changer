@@ -10,9 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codemagos.profilechanger.ProfilesActivity">
 <ListView
+    android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
     android:id="@+id/list_profiles"
     android:layout_height="wrap_content"
 
     ></ListView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/float_btn_add_new"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_add_icon"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        />
 </RelativeLayout>

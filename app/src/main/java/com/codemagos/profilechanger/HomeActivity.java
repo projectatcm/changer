@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.codemagos.profilechanger.DbConnection.DbHelper;
 import com.codemagos.profilechanger.Receivers.LocationReceiveService;
 import com.codemagos.profilechanger.Spstore.SharedPreferenceStore;
+import com.codemagos.profilechanger.Utils.Alert;
 import com.codemagos.profilechanger.Utils.Utils;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,6 +33,10 @@ public class HomeActivity extends AppCompatActivity {
         spStore = new SharedPreferenceStore(getApplicationContext());
         dbHelper = new DbHelper(getApplicationContext());
         db = dbHelper.getWritableDatabase();
+        if(!spStore.isOnDefault()){
+            //setting default commands...
+
+        }
         /*--------------------------*/
         btn_info_bluetooth = (Button) findViewById(R.id.btn_info_bluetooth);
         btn_info_brightness = (Button) findViewById(R.id.btn_info_brightness);

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ActionsActivity extends AppCompatActivity {
 FloatingActionButton float_btn_add_new;
@@ -21,25 +22,27 @@ FloatingActionButton float_btn_add_new;
                 Dialog dialog = new Dialog(ActionsActivity.this);
                 dialog.setContentView(R.layout.dialog_action_select);
                 Button btn_wifi = (Button) dialog.findViewById(R.id.btn_wifi);
-                Button btn_call = (Button) dialog.findViewById(R.id.btn_call);
+              //  Button btn_call = (Button) dialog.findViewById(R.id.btn_call);
                 Button btn_alarm = (Button) dialog.findViewById(R.id.btn_alarm);
                 Button btn_location = (Button) dialog.findViewById(R.id.btn_location);
                 btn_wifi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(),ActionWifiSetActivity.class));
+                      //  startActivity(new Intent(getApplicationContext(),ActionWifiSetActivity.class));
+                        Toast.makeText(getApplicationContext(),"Action not supported",Toast.LENGTH_SHORT).show();
                     }
                 });
-                btn_call.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(),ActionWifiSetActivity.class));
-                    }
-                });
+
                 btn_alarm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(getApplicationContext(),ActionAlarmSetActivity.class));
+                    }
+                });
+                btn_location.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(),LocationSetActivity.class));
                     }
                 });
                 dialog.setTitle("Choose Action Type");

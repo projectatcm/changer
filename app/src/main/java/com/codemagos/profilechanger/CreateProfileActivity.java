@@ -132,6 +132,8 @@ Spinner spinner_ring;
             Log.d("PROFILE_NAME", profileName);
                 Long profileID = dbHelper.addProfile(sqLiteDatabase, profileName, "", bluetooth, brightness, "", "", ring, wifi);
                 Toast.makeText(getApplicationContext(), "Profile Added : " + profileID, Toast.LENGTH_LONG).show();
+            finish();
+
 
         }
     };

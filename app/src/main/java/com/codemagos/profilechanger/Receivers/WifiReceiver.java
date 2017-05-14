@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.codemagos.profilechanger.DbConnection.DbHelper;
 import com.codemagos.profilechanger.PhoneSettingsChanger;
+import com.codemagos.profilechanger.ProfileChanger;
 
 /**
  * Created by prasanth on 9/3/17.
@@ -35,12 +36,14 @@ public class WifiReceiver extends BroadcastReceiver {
             WifiInfo wifiInfo = wifiManager.getConnectionInfo();
             String ssid = wifiInfo.getSSID();
             Toast.makeText(context,ssid,Toast.LENGTH_LONG).show();
-            /*Cursor wifiActionCursor = dbHelper.getWifiAction(sqLiteDatabase,ssid);
+            Cursor wifiActionCursor = dbHelper.getWifiAction(sqLiteDatabase,ssid);
             if(wifiActionCursor != null){
                 wifiActionCursor.moveToNext();
                 int profile = wifiActionCursor.getInt(2);
+                ProfileChanger profileChanger = new ProfileChanger(context);
+                profileChanger.set(profile+"");
                 Toast.makeText(context,""+profile,Toast.LENGTH_LONG).show();
-            }*/
+            }
         }
     }
 }

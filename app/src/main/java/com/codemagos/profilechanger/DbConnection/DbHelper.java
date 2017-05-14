@@ -40,6 +40,10 @@ public class DbHelper extends SQLiteOpenHelper {
             "profile_on_disconnect INTEGER," +
             "status INTEGER" +
             ");";
+    String CREATE_LOCATION_ACTION = "CREATE TABLE IF NOT EXISTS location_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "latlng TEXT," +
+            "profile INTEGER"+
+            ");";
     String CREATE_ALARM_ACTION = "CREATE TABLE IF NOT EXISTS alarm_action(id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "time DATETIME," +
             "profile_on_trigger INTEGER" +
@@ -58,10 +62,17 @@ public class DbHelper extends SQLiteOpenHelper {
       db.execSQL(CREATE_ALARM_ACTION);
         db.execSQL(CREATE_WIFI_ACTION);
         db.execSQL(CREATE_CONTACTS_TABLE);
+        db.execSQL(CREATE_LOCATION_ACTION);
         Log.i(LOG,"Tables created !");
     }
 
-
+    public void addLocationAction(SQLiteDatabase db,String latlng,int profile){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("latlng", latlng);
+        contentValues.put("profile", profile);
+        db.insert("location_action", null, contentValues);
+        Log.i(LOG,"Location Action Added");
+    }
 
 
     public void addWifiAction(SQLiteDatabase db,String ssid,int profile_on_connect,int profile_on_disconnect ){
@@ -73,6 +84,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.insert("wifi_action", null, contentValues);
         Log.i(LOG,"Wifi Action Added");
     }
+
     public Long addProfile(SQLiteDatabase db,String name,String airplane,String bluetooth,
                            String brightness,String gps,String mobile_data,
                            String ring,String wifi){
@@ -105,6 +117,12 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor rs = db.rawQuery(query,params);
         return rs;
     }
+    public void deleteContacts(SQLiteDatabase db,String id){
+        db.execSQL("delete from contacts where id='"+id+"'");
+    }
+    public void deleteProfile(SQLiteDatabase db,String id){
+        db.execSQL("delete from profile where id='"+id+"'");
+    }
     public Cursor searchInContact(SQLiteDatabase db,String number){
         String query = "Select * from contacts where number = '"+number+"'";
         String[] params = null;
@@ -113,6 +131,12 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public Cursor getContact(SQLiteDatabase db,String contactID){
         String query = "Select * from contacts where id = '"+contactID+"'";
+        String[] params = null;
+        Cursor rs = db.rawQuery(query,params);
+        return rs;
+    }
+    public Cursor getLocation(SQLiteDatabase db,String latlng){
+        String query = "Select * from location_action";
         String[] params = null;
         Cursor rs = db.rawQuery(query,params);
         return rs;
@@ -136,6 +160,8 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor rs = db.rawQuery(query,params);
         return rs;
     }
+
+
 
 
 

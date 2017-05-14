@@ -29,7 +29,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         String profileID = intent.getStringExtra("profileID");
         profileChanger.set(profileID);
         showNotification(context,"Pofile Changer","Profile Changed to Office");
-
     }
 
     public void showNotification(Context context,String title,String message){

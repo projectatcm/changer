@@ -12,6 +12,7 @@
 <ListView
     android:layout_width="match_parent"
     android:id="@+id/list_contacts"
+    android:clickable="true"
     android:layout_height="match_parent"></ListView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/float_btn_add_new"

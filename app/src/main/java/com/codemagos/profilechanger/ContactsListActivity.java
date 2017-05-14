@@ -1,6 +1,11 @@
 package com.codemagos.profilechanger;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.codemagos.profilechanger.Adapters.ContactsListAdapter;
 import com.codemagos.profilechanger.DbConnection.DbHelper;
@@ -83,6 +89,8 @@ public class ContactsListActivity extends AppCompatActivity {
                 number = txt_number.getText().toString();
                 dbHelper.addContact(db, name, number, ring);
                 contactDialog.hide();
+                txt_name.setText("");
+                txt_number.setText("");
                 updateContacts();
 
             }
@@ -99,7 +107,7 @@ public class ContactsListActivity extends AppCompatActivity {
 
     public void updateContacts() {
         Cursor contactsCursor = dbHelper.getContacts(db);
-        ArrayList ids = new ArrayList();
+        final ArrayList ids = new ArrayList();
         ArrayList names = new ArrayList();
         ArrayList numbers = new ArrayList();
         ArrayList rings = new ArrayList();
@@ -115,9 +123,27 @@ public class ContactsListActivity extends AppCompatActivity {
                 rings.add(ring);
             }
 
-            ContactsListAdapter contactsListAdapter = new ContactsListAdapter(ContactsListActivity.this, names, numbers, rings);
+            ContactsListAdapter contactsListAdapter = new ContactsListAdapter(ContactsListActivity.this,ids, names, numbers, rings);
             list_contacts.setAdapter(contactsListAdapter);
+            list_contacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    new AlertDialog.Builder(ContactsListActivity.this)
+                            .setTitle("Delete")
+                            .setMessage("Are you sure to delete")
+                           // .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dbHelper.deleteContacts(db,ids.get(position).toString());
+                                    updateContacts();
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+
+
+
+                }
+            });
         }
     }
 }
